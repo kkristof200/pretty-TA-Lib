@@ -10,7 +10,7 @@ Prettified interface for [TA-Lib](https://github.com/mrjbq7/ta-lib)
       ~~~~shell
       brew install ta-lib
       ~~~~
-    - For other problems, or troubleshooting please check the installation guide for [TA-Lib](https://github.com/mrjbq7/ta-lib)
+    - For other platforms, or troubleshooting please check the installation guide for [TA-Lib](https://github.com/mrjbq7/ta-lib)
 
 2. Install pretty_talib
 ~~~~bash
