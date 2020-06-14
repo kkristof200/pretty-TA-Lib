@@ -15,7 +15,7 @@ from pretty_talib import get_stats, ALL, FunctionName
 
 # ----------------------------------------------------------------- Flow ----------------------------------------------------------------- #
 
-l=50
+l=2
 timeperiod = 5
 data = {
     'open': numpy.random.random(l),
@@ -27,7 +27,9 @@ data = {
 
 import pandas as pd
 
-df = pd.DataFrame (data, columns=['open', 'high', 'low', 'close', 'volume'])
+df = pd.DataFrame(data, columns=['open', 'high', 'low', 'close', 'volume'])
+
+print(df)
 
 # stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
 
@@ -36,29 +38,29 @@ df = pd.DataFrame (data, columns=['open', 'high', 'low', 'close', 'volume'])
 
 # BENCHMARKS
 
-from funcmeasure import measure
+# from funcmeasure import measure
 
-def dict_use_objects_false_use_builtin_types_false():
-    get_stats(data, timeperiod=timeperiod)
+# def dict_use_objects_false_use_builtin_types_false():
+#     get_stats(data, timeperiod=timeperiod)
 
-def dict_use_objects_false_builtin_types_true():
-    get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
+# def dict_use_objects_false_builtin_types_true():
+#     get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
 
-def dict_use_objects_true_use_builtin_types_true():
-    get_stats(data, timeperiod=timeperiod, use_objects=True)
+# def dict_use_objects_true_use_builtin_types_true():
+#     get_stats(data, timeperiod=timeperiod, use_objects=True)
 
-def df_use_objects_false_use_builtin_types_false():
-    get_stats(data, timeperiod=timeperiod, use_objects=True)
+# def df_use_objects_false_use_builtin_types_false():
+#     get_stats(data, timeperiod=timeperiod, use_objects=True)
 
-measure(
-    [
-        dict_use_objects_false_use_builtin_types_false,
-        dict_use_objects_false_builtin_types_true,
-        dict_use_objects_true_use_builtin_types_true,
-        df_use_objects_false_use_builtin_types_false
-    ],
-    times=250
-)
+# measure(
+#     [
+#         dict_use_objects_false_use_builtin_types_false,
+#         dict_use_objects_false_builtin_types_true,
+#         dict_use_objects_true_use_builtin_types_true,
+#         df_use_objects_false_use_builtin_types_false
+#     ],
+#     times=250
+# )
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------- #
