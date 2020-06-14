@@ -25,7 +25,7 @@ data = {
     'volume': numpy.random.random(l)
 }
 
-stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=False)
+stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
 
 with open('stats.json', 'w') as file:
     json.dump(stats, file, indent=4)
