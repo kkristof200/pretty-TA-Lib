@@ -25,32 +25,40 @@ data = {
     'volume': numpy.random.random(l)
 }
 
-stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
+import pandas as pd
 
-with open('stats.json', 'w') as file:
-    json.dump(stats, file, indent=4)
+df = pd.DataFrame (data, columns=['open', 'high', 'low', 'close', 'volume'])
+
+# stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
+
+# with open('stats.json', 'w') as file:
+#     json.dump(stats, file, indent=4)
 
 # BENCHMARKS
 
-# from funcmeasure import measure
+from funcmeasure import measure
 
-# def use_objects_false_use_builtin_types_false():
-#     get_stats(data, types=ALL, timeperiod=timeperiod)
+def dict_use_objects_false_use_builtin_types_false():
+    get_stats(data, timeperiod=timeperiod)
 
-# def use_objects_false_builtin_types_true():
-#     get_stats(data, types=ALL, timeperiod=timeperiod, use_builtin_types=True)
+def dict_use_objects_false_builtin_types_true():
+    get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
 
-# def use_objects_true_use_builtin_types_true():
-#     get_stats(data, types=ALL, timeperiod=timeperiod, use_objects=True)
+def dict_use_objects_true_use_builtin_types_true():
+    get_stats(data, timeperiod=timeperiod, use_objects=True)
 
-# measure(
-#     [
-#         use_objects_false_use_builtin_types_false,
-#         use_objects_false_builtin_types_true,
-#         use_objects_true_use_builtin_types_true
-#     ],
-#     times=100
-# )
+def df_use_objects_false_use_builtin_types_false():
+    get_stats(data, timeperiod=timeperiod, use_objects=True)
+
+measure(
+    [
+        dict_use_objects_false_use_builtin_types_false,
+        dict_use_objects_false_builtin_types_true,
+        dict_use_objects_true_use_builtin_types_true,
+        df_use_objects_false_use_builtin_types_false
+    ],
+    times=250
+)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------- #

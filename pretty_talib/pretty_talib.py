@@ -70,16 +70,17 @@ def get_stats(
                                       Defaults to False.
 
         IMPORTANT NOTE:
-            - THE VALUES OF 'use_builtin_types' AND 'use_objects' HIGHLY AFFECTS EFFICIENCY
+            - THE VALUES OF input 'data', 'use_builtin_types' AND 'use_objects' HIGHLY AFFECTS EFFICIENCY
               SEE BENCHMARK BELOW (Ran 250 times)
 
-            --------------------------------------------------------------------------
-            | rank |                    name                    |  duration  |  perc |
-            --------------------------------------------------------------------------
-            |    1 | use_builtin_types=False, use_objects=False | 0.00626893 |       |
-            |    2 |  use_builtin_types=True, use_objects=False | 0.02440002 | 3.89x | -> ~4x slower
-            |    3 |   use_builtin_types=True, use_objects=True | 0.03171391 | 5.05x | -> ~5x slower
-            --------------------------------------------------------------------------
+            -------------------------------------------------------------------------------------------
+            | rank |                            setup                            |  duration  |  perc |
+            -------------------------------------------------------------------------------------------
+            |    1 | data: Dict,      use_builtin_types=False, use_objects=False | 0.00626893 |       |
+            |    2 | data: Dict,      use_builtin_types=True,  use_objects=False | 0.02440002 | 3.89x | -> ~5.4x slower
+            |    3 | data: Dict,      use_builtin_types=True,  use_objects=True  | 0.03171391 | 5.05x | -> ~5.9x slower
+            |    4 | data: pandas.df, use_builtin_types=False, use_objects=False | 0.03171391 | 5.05x | -> ~6.1x slower
+            -------------------------------------------------------------------------------------------
 
     Returns:
         Optional[Union[Dict[str, Any], object]]: Returns dictionary or objects, based on the provided values for 'use_builtin_types' and 'use_objects'
