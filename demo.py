@@ -15,7 +15,7 @@ from pretty_talib import get_stats, ALL, FunctionName
 
 # ----------------------------------------------------------------- Flow ----------------------------------------------------------------- #
 
-l=2
+l=50
 timeperiod = 5
 data = {
     'open': numpy.random.random(l),
@@ -29,12 +29,10 @@ import pandas as pd
 
 df = pd.DataFrame(data, columns=['open', 'high', 'low', 'close', 'volume'])
 
-print(df)
+stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
 
-# stats = get_stats(data, timeperiod=timeperiod, use_builtin_types=True)
-
-# with open('stats.json', 'w') as file:
-#     json.dump(stats, file, indent=4)
+with open('stats.json', 'w') as file:
+    json.dump(stats, file, indent=4)
 
 # BENCHMARKS
 
