@@ -20,19 +20,19 @@ pip3 install pretty_talib
 ~~~~
 
 ## Important Note
-THE VALUES OF input 'data', 'use_builtin_types' AND 'use_objects' HIGHLY AFFECTS EFFICIENCY.
+THE TYPE OF 'data' AND THE VALUES OF 'use_builtin_types' AND 'use_objects' HIGHLY AFFECTS EFFICIENCY.
 
 SEE BENCHMARK BELOW (Ran 250 times)
 
 ~~~~
--------------------------------------------------------------------------------------------
-| rank |                            setup                            |  duration  |  perc |
--------------------------------------------------------------------------------------------
-|    1 | data: Dict,      use_builtin_types=False, use_objects=False | 0.00626893 |       |
-|    2 | data: Dict,      use_builtin_types=True,  use_objects=False | 0.02440002 | 3.89x | -> ~5.4x slower
-|    3 | data: Dict,      use_builtin_types=True,  use_objects=True  | 0.03171391 | 5.05x | -> ~5.9x slower
-|    4 | data: pandas.df, use_builtin_types=False, use_objects=False | 0.03171391 | 5.05x | -> ~6.1x slower
--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+| rank |                                setup                               |  duration  |  perc |
+--------------------------------------------------------------------------------------------------
+|    1 | data: Dict,             use_builtin_types=False, use_objects=False | 0.00626893 |       |
+|    2 | data: Dict,             use_builtin_types=True,  use_objects=False | 0.02440002 | 3.89x | -> ~5.4x slower
+|    3 | data: Dict,             use_builtin_types=True,  use_objects=True  | 0.03171391 | 5.05x | -> ~5.9x slower
+|    4 | data: pandas.DataFrame, use_builtin_types=False, use_objects=False | 0.03171391 | 5.05x | -> ~6.1x slower
+--------------------------------------------------------------------------------------------------
 ~~~~
 
 ## Usage
