@@ -29,7 +29,7 @@ def get_stats(
     timeperiod: Optional[int] = None,
     use_builtin_types: bool = False,
     use_objects: bool = False,
-) -> Optional[Union[Dict[str, Union[List[numpy.ndarray], numpy.ndarray, pandas.DataFrame]], object]]:
+) -> Optional[Union[Dict[FunctionName, Union[List[numpy.ndarray], numpy.ndarray, pandas.DataFrame]], object]]:
     """Creates TA data for the selected types of analysises
 
     Args:
@@ -83,7 +83,7 @@ def get_stats(
             --------------------------------------------------------------------------------------------------
 
     Returns:
-        Optional[Union[Dict[str, Any], object]]: Returns dictionary or objects, based on the provided values for 'use_builtin_types' and 'use_objects'
+        Optional[Union[Dict[FunctionName, Any], object]]: Returns dictionary, pandas.DataFrame or objects, based on the provided values for 'use_builtin_types' and 'use_objects'
     """
 
     if isinstance(data, pandas.DataFrame):
@@ -120,7 +120,7 @@ def get_stats(
             if (use_builtin_types or use_objects):
                 _res = __convert_to_builtin(_res)
 
-            res[func_name] = _res
+            res[func_name if use_objects else func_name_enum] = _res
         except Exception as e:
             print(func_name, e)
 

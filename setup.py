@@ -9,7 +9,7 @@ else:
 
 setuptools.setup(
     name="pretty_talib",
-    version="0.0.7",
+    version="0.0.9",
     author="Kristof",
     description="prettified interface for TA-Lib",
     long_description=long_description,
