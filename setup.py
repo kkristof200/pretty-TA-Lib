@@ -9,14 +9,14 @@ else:
 
 setuptools.setup(
     name="pretty_talib",
-    version="0.0.9",
+    version="0.0.10",
     author="Kristof",
     description="prettified interface for TA-Lib",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/kkristof200/pretty-TA-Lib",
     packages=setuptools.find_packages(),
-    install_requires=["jsoncodable", "numpy", "TA-Lib"],
+    install_requires=["TA_Lib", "jsoncodable", "pandas", "funcmeasure", "numpy", "talib"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

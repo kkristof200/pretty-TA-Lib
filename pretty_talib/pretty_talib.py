@@ -12,6 +12,7 @@ import numpy
 
 # Local
 from .enums.function_name import FunctionName
+from .returns import returns
 
 # ---------------------------------------------------------------------------------------------------------------------------------------- #
 
@@ -29,7 +30,8 @@ def get_stats(
     timeperiod: Optional[int] = None,
     use_builtin_types: bool = False,
     use_objects: bool = False,
-) -> Optional[Union[Dict[FunctionName, Union[List[numpy.ndarray], numpy.ndarray, pandas.DataFrame]], object]]:
+    map_results: bool = False
+) -> Optional[Union[Dict[FunctionName, Union[List[numpy.ndarray], numpy.ndarray, pandas.DataFrame, Dict[str, numpy.ndarray]]], object]]:
     """Creates TA data for the selected types of analysises
 
     Args:
@@ -69,6 +71,15 @@ def get_stats(
                                       If True, 'use_builtin_types' will be also True.
                                       Defaults to False.
 
+        map_results (bool, optional): maps the result for each function.
+                                      For example for 'MACD' the return is a list with 3 numpy.ndarrays
+                                      This converts it to a dict with 1 ndarray for each key so it becomes:
+                                      {
+                                          'macd': numpy.ndarray,
+                                          'macdsignal': numpy.ndarray,
+                                          'macdhist': numpy.ndarray
+                                      }
+
         IMPORTANT NOTE:
             - THE TYPE OF 'data' AND THE VALUES OF 'use_builtin_types' AND 'use_objects' HIGHLY AFFECTS EFFICIENCY
               SEE BENCHMARK BELOW (Ran 250 times)
@@ -83,7 +94,7 @@ def get_stats(
             --------------------------------------------------------------------------------------------------
 
     Returns:
-        Optional[Union[Dict[FunctionName, Any], object]]: Returns dictionary, pandas.DataFrame or objects, based on the provided values for 'use_builtin_types' and 'use_objects'
+        Optional[Union[Dict[FunctionName, Union[List[numpy.ndarray], numpy.ndarray, pandas.DataFrame, Dict[str, numpy.ndarray]]], object]]: Returns dictionary, pandas.DataFrame or objects, based on the provided values for 'use_builtin_types', 'use_objects' and 'map_results'
     """
 
     if isinstance(data, pandas.DataFrame):
@@ -102,7 +113,7 @@ def get_stats(
     res = {}
 
     for func_name_enum, args_kwargs in functions.items():
-        func_name = func_name_enum.value
+        func_name = func_name_enum.value if type(func_name_enum) == FunctionName else str(func_name_enum)
         func = abstract.Function(func_name)
 
         args, kwargs = args_kwargs
@@ -120,12 +131,33 @@ def get_stats(
             if (use_builtin_types or use_objects):
                 _res = __convert_to_builtin(_res)
 
+            if map_results:
+                __res = {}
+                _returns = returns[func_name]
+
+                if isinstance(_res, numpy.ndarray):
+                    __res[_returns[0]] = _res
+                else:
+                    i = 0
+
+                    for sub_res in _res:
+                        __res[_returns[i]] = sub_res
+                        i += 1
+
+                _res = __res
+
             res[func_name if use_objects else func_name_enum] = _res
         except Exception as e:
             print(func_name, e)
 
     return res if not use_objects else JSONCodable.from_json(res)
 
+# def get_stepped_stats(
+#     data: Dict[str, numpy.ndarray],
+#     functions: Dict[Union[FunctionName, str], Tuple[Optional[Tuple], Optional[Dict[str, Any]]]] = {__ALL_METHODS_KEY: (None, None)},
+#     timeperiod: Optional[int] = None,
+#     map_results: bool = False
+# ) -> Optional[Dict[FunctionName, Union[List[numpy.ndarray], numpy.ndarray, pandas.DataFrame]], object]]:
 
 # ----------------------------------------------------------- Private methods ------------------------------------------------------------ #
 
